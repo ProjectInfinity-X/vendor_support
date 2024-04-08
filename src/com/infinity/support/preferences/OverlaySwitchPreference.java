@@ -26,11 +26,11 @@ import android.os.ServiceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 
-import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import java.lang.SecurityException;
 
-public class OverlaySwitchPreference extends SwitchPreference {
+public class OverlaySwitchPreference extends SwitchPreferenceCompat {
     private final static String TAG = "OverlaySwitchPreference";
     private IOverlayManager mOverlayManager;
 
