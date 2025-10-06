@@ -14,7 +14,8 @@ android_library {
         "androidx.appcompat_appcompat",
         "androidx.recyclerview_recyclerview",
         "SettingsLibMainSwitchPreference",
-        "SettingsLib"
+        "SettingsLib",
+        "org.lineageos.platform"
     ],
 
     resource_dirs: ["res"],
