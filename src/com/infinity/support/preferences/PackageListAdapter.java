@@ -33,8 +33,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import com.infinity.support.R;
@@ -43,6 +45,7 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
     private PackageManager mPm;
     private LayoutInflater mInflater;
     private final List<PackageItem> mInstalledPackages = new LinkedList<PackageItem>();
+    private Set<String> mExcludedPackages = new HashSet<String>();
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -131,12 +134,17 @@ public class PackageListAdapter extends BaseAdapter implements Runnable {
     public void run() {
         List<ApplicationInfo> installedAppsInfo = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
         for (ApplicationInfo appInfo : installedAppsInfo) {
-            if (appInfo.icon != 0) {
+            if (appInfo.icon != 0 && !mExcludedPackages.contains(appInfo.packageName)) {
                 final PackageItem item = new PackageItem(appInfo.packageName,
                         appInfo.loadLabel(mPm), appInfo.loadIcon(mPm));
                 mHandler.obtainMessage(0, item).sendToTarget();
             }
         }
+    }
+
+    public void setExcludedPackages(HashSet<String> packages) {
+        mExcludedPackages = packages;
+        reloadList();
     }
 
     private static class ViewHolder {
